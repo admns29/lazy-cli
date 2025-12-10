@@ -1,0 +1,110 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lazy-cli"
+version = "0.1.0"
+description = "A modular CLI tool to automate boring digital chores with plugins"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+keywords = ["cli", "automation", "productivity", "tools", "plugins"]
+authors = [
+    {name = "lazy-cli Contributors"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Utilities",
+    "Topic :: System :: Systems Administration",
+]
+
+dependencies = [
+    "typer[all]>=0.9.0",
+    "rich>=13.0.0",
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
+# Plugins dependencies (optional)
+plugins = [
+    "Pillow>=10.0.0",        # For image operations
+    "img2pdf>=0.5.0",        # For images-to-pdf
+    "yt-dlp>=2023.0.0",      # For youtube-download
+    "yfinance>=0.2.0",       # For stock-price
+    "PyPDF2>=3.0.0",         # For compress-pdf
+    "schedule>=1.2.0",       # For schedule-task
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/lazy-cli"
+Documentation = "https://github.com/yourusername/lazy-cli#readme"
+Repository = "https://github.com/yourusername/lazy-cli"
+Issues = "https://github.com/yourusername/lazy-cli/issues"
+
+[project.scripts]
+lazy = "lazy_cli.main:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lazy_cli*"]
+exclude = ["tests*", "docs*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=lazy_cli --cov-report=term-missing"
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by black)
+    "B008",  # do not perform function calls in argument defaults
+]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
